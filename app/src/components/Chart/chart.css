@@ -1,0 +1,9 @@
+.apexcharts-svg {
+  border-radius: 10px;
+  box-shadow: rgba(0, 0, 0, 0.35) 0px 0px 4px;
+}
+
+.apexcharts-legend.apexcharts-align-center.apx-legend-position-top {
+  width: 100%;
+  left: 170px !important;
+}

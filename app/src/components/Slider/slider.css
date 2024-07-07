@@ -1,0 +1,16 @@
+.SliderBox {
+  display: flex;
+  align-items: center;
+  border: 1px solid rgba(0, 0, 0, 0.23);
+  border-radius: 4px;
+  padding: 0 30px 0 30px;
+}
+
+.SliderValue {
+  position: absolute;
+  color: rgba(0, 0, 0, 0.6);
+  font-size: 0.75em;
+  background-color: white;
+  padding: 0 5px 0 5px;
+  transform: translateY(-28px) translateX(-22px);
+}

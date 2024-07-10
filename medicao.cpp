@@ -1,45 +1,56 @@
 #include "medicao.h"
 
-Medicao::Medicao(int pino_sensores, int pino_in2, int pino_in4, int pino_pwm)
+Medicao::Medicao(MedicaoProps data)
 {
-    _pino_sensores = pino_sensores;
-    _pino_in2 = pino_in2;
-    _pino_in4 = pino_in4;
-    _pino_pwm = pino_pwm;
+    running = false;
+    _pino_sensores = data.pino_sensores;
+    _pino_in2 = data.pino_in2;
+    _pino_in4 = data.pino_in4;
+    _pino_pwm = data.pino_pwm;
     _callback = nullptr;
-}
-
-void Medicao::init(int rpm, int tempo)
-{
     OneWire oneWire(_pino_sensores);
     DallasTemperature sensors(&oneWire);
     sensors.begin();
     _sensores = sensors;
 }
 
-void Medicao::stop()
+void Medicao::init(initProps data)
 {
-    _callback = nullptr;
-}
-
-void Medicao::setCallback(void (*callbackFunc)(int, int, int))
-{
-    _callback = callbackFunc;
-}
-
-void Medicao::triggerCallback(int T1, int T2, int T3)
-{
-    if (_callback)
+    int tempoAtual = 0;
+    running = true;
+    while (tempoAtual <= data.tempo && running)
     {
-        _callback(T1, T2, T3);
+        analogWrite(_pino_pwm, data.rpm);
+        triggerCallback(readSensors());
+        tempoAtual++;
+        delay(TIME_DELAY_MS);
     }
+    running = false;
 }
 
-void Medicao::readSensors()
+dataProps Medicao::readSensors()
 {
     _sensores.requestTemperatures();
     int T1 = _sensores.getTempCByIndex(0);
     int T2 = _sensores.getTempCByIndex(1);
-    int T3 = _sensores.getTempCByIndex(2);
-    triggerCallback(T1, T2, T3);
+    dataProps data = {T1, T2, 100, 1};
+    return data;
+}
+
+void Medicao::stop()
+{
+    running = false;
+}
+
+void Medicao::setCallback(void (*callbackFunc)(dataProps))
+{
+    _callback = callbackFunc;
+}
+
+void Medicao::triggerCallback(dataProps data)
+{
+    if (_callback)
+    {
+        _callback(data);
+    }
 }

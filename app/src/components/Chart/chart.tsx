@@ -111,7 +111,7 @@ export default function Chart(props: ChartProps) {
 
   return (
     <>
-      <div style={{ marginTop: 40, pointerEvents: props.disable ? "none" : undefined }}>
+      <div className={`chart-container ${props.disable ? "disabled" : ""}`}>
         <ReactApexChart options={options} series={series} type="line" height={350} />
       </div>
     </>

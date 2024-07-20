@@ -1,17 +1,16 @@
 import { create } from "zustand";
-import { SendJsonMessage } from "react-use-websocket/dist/lib/types";
 
 export type StatusActions = "connecting" | "connect" | "disconnect" | "mensuaring";
 
-export type ConnectMessage = {
-  connect: string;
-};
+export interface MessagePayload {
+  connect?: string;
+  S1?: number;
+  S2?: number;
+  tempo?: string;
+  rpm?: number;
+}
 
-export type MensuaringMessage = {
-  S1: number;
-  S2: number;
-  time: number;
-};
+type SendJsonMessage = (jsonMessage: MessagePayload, keep?: boolean) => void;
 
 export type SystemState = {
   status: StatusActions;
@@ -41,10 +40,11 @@ export const useSystem = create<SystemState>((set) => ({
       set({ status: value.status, connected: value.status == "connect" || value.status == "mensuaring" });
     }
   },
-  setSendMessage: (value) =>
+  setSendMessage: (value) => {
     set({
       sendMessage: value,
-    }),
+    });
+  },
   setRpm: (value) => {
     set({
       rpm: value,

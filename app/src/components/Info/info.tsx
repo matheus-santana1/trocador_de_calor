@@ -34,7 +34,7 @@ function LinearProgressWithLabel(props: LinearProgressProps & { value: number })
 }
 
 export default function Info(props: InfoProps) {
-  const { status, sendMessage, setSystem, rpm, tempo } = useSystem();
+  const { status, sendMessage, setSystem, tempo } = useSystem();
 
   function PlayClick() {
     setSystem({ status: "mensuaring" });

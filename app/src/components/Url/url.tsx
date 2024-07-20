@@ -30,7 +30,7 @@ function urlCheck(text: string) {
 
 export default function Url() {
   const { register, handleSubmit, watch } = useForm<FormProps>();
-  const { status, connected, setSystem, url: urlSystem, sendMessage } = useSystem();
+  const { status, connected, setSystem, url: urlSystem } = useSystem();
   const url = watch("url");
   const [isUrl, setIsUrl] = useState<boolean>(true);
 

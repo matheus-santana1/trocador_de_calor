@@ -6,7 +6,7 @@ import Slider from "../components/Slider/slider.tsx";
 import Select from "../components/Select/select.tsx";
 import StatusBar from "../components/StatusBar/statusbar.tsx";
 import Info from "../components/Info/info.tsx";
-import { useSystem, MensuaringMessage, ConnectMessage } from "../system/system.tsx";
+import { useSystem, MessagePayload } from "../system/system.tsx";
 import useWebSocketDefault, { Options } from "react-use-websocket";
 import { useState } from "react";
 
@@ -22,7 +22,7 @@ function App() {
   };
   const { sendJsonMessage } = useWebSocketDefault(url, socketOptions);
 
-  function onMessageAction(data: ConnectMessage | MensuaringMessage) {
+  function onMessageAction(data: MessagePayload) {
     if ("connect" in data) {
       setSystem({
         status: "connect",

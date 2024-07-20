@@ -7,3 +7,11 @@
   width: 100%;
   left: 170px !important;
 }
+
+.chart-container {
+  margin-top: 40px;
+}
+
+.disabled {
+  pointer-events: none;
+}

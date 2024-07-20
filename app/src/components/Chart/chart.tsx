@@ -112,7 +112,7 @@ export default function Chart(props: ChartProps) {
   return (
     <>
       <div style={{ marginTop: 40, pointerEvents: props.disable ? "none" : undefined }}>
-        <ReactApexChart options={options} series={series} type="line" height={350} s />
+        <ReactApexChart options={options} series={series} type="line" height={350} />
       </div>
     </>
   );

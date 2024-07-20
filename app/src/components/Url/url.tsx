@@ -1,26 +1,36 @@
-import { TextField } from "@mui/material";
+import TextField from "@mui/material/TextField";
 import Button from "@mui/material/Button";
 import TaskAltIcon from "@mui/icons-material/TaskAlt";
 import Close from "@mui/icons-material/Close";
 import Stack from "@mui/material/Stack";
 import CircularProgress from "@mui/material/CircularProgress";
 import Box from "@mui/material/Box";
+import { styled } from "@mui/material/styles";
 import { useForm } from "react-hook-form";
 import { useState, useEffect } from "react";
 import { useSystem } from "../../system/system";
+
+type FormProps = {
+  url: string;
+};
+
+const default_url = import.meta.env.VITE_DEFAULT_URL;
+const CustomTextField = styled(TextField)`
+  & .MuiFormHelperText-root {
+    left: -10px;
+    top: 55px;
+    position: absolute;
+  }
+`;
 
 function urlCheck(text: string) {
   const regex = /\b(?:\d{1,3}\.){3}\d{1,3}\b/;
   return regex.test(text);
 }
 
-type FormProps = {
-  url: string;
-};
-
 export default function Url() {
   const { register, handleSubmit, watch } = useForm<FormProps>();
-  const { status, connected, setSystem, url: urlSystem } = useSystem();
+  const { status, connected, setSystem, url: urlSystem, sendMessage } = useSystem();
   const url = watch("url");
   const [isUrl, setIsUrl] = useState<boolean>(true);
 
@@ -40,13 +50,13 @@ export default function Url() {
     <>
       <form onSubmit={onSubmit}>
         <Stack direction="row" spacing={2}>
-          <TextField
+          <CustomTextField
             error={!isUrl}
             variant="outlined"
             label="IP"
             helperText={isUrl ? "" : "O endereço digitado é inválido."}
             fullWidth
-            defaultValue="127.0.0.1:8080"
+            defaultValue={default_url}
             disabled={connected}
             {...register("url")}
           />

@@ -1,5 +1,6 @@
 #include <WiFi.h>
 #include <WebSocketsServer.h>
+#include <ArduinoJson.h>
 #include "env.h"
 #include "medicao.h"
 
@@ -7,6 +8,14 @@ TaskHandle_t MedicaoTask;
 TaskHandle_t WiFiTask;
 WebSocketsServer webSocket = WebSocketsServer(81);
 // Medicao medicao({2, 3, 4, 5});
+
+JsonDocument doc;
+String jsonString;
+void buildJson()
+{
+    jsonString = "";
+    serializeJson(doc, jsonString);
+}
 
 void setup()
 {
@@ -75,6 +84,9 @@ void webSocketEvent(uint8_t num, WStype_t type, uint8_t *payload, size_t length)
     {
         IPAddress ip = webSocket.remoteIP(num);
         Serial.printf("\n[%u] Conectado %d.%d.%d.%d url: %s", num, ip[0], ip[1], ip[2], ip[3], payload);
+        doc["status"] = "connect";
+        buildJson();
+        webSocket.sendTXT(num, jsonString);
     }
     break;
     case WStype_TEXT:

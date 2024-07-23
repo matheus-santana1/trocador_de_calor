@@ -6,7 +6,7 @@ import Slider from "../components/Slider/slider.tsx";
 import Select from "../components/Select/select.tsx";
 import StatusBar from "../components/StatusBar/statusbar.tsx";
 import Info from "../components/Info/info.tsx";
-import { useSystem, MessagePayload } from "../system/system.tsx";
+import { useSystem, MessagePayload, StatusActions } from "../system/system.tsx";
 import useWebSocketDefault, { Options } from "react-use-websocket";
 import { useState } from "react";
 
@@ -15,7 +15,11 @@ function App() {
   const [valueSlider, setValueSlider] = useState<number>(40);
 
   const socketOptions: Options = {
-    onClose: () => {},
+    onClose: () => {
+      setSystem({
+        status: "disconnect",
+      });
+    },
     onMessage: (message) => {
       onMessageAction(JSON.parse(message.data));
     },
@@ -23,9 +27,9 @@ function App() {
   const { sendJsonMessage } = useWebSocketDefault(url, socketOptions);
 
   function onMessageAction(data: MessagePayload) {
-    if ("connect" in data) {
+    if ("status" in data) {
       setSystem({
-        status: "connect",
+        status: data.status as StatusActions,
       });
     }
   }

@@ -2,7 +2,7 @@ import { WebSocketServer } from "ws";
 
 const wss = new WebSocketServer({ port: 8080 });
 
-const connectedMessage = { connect: true };
+const connectedMessage = { status: "mensuaring" };
 
 wss.on("connection", function connection(ws) {
   ws.on("error", console.error);

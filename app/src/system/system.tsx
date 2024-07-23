@@ -3,10 +3,10 @@ import { create } from "zustand";
 export type StatusActions = "connecting" | "connect" | "disconnect" | "mensuaring";
 
 export interface MessagePayload {
-  connect?: string;
+  status?: string;
   S1?: number;
   S2?: number;
-  tempo?: string;
+  tempo?: number;
   rpm?: number;
 }
 
@@ -19,10 +19,10 @@ export type SystemState = {
   setSystem: (value: { status: StatusActions; url?: string | (() => string | Promise<string>) | null }) => void;
   setSendMessage: (value: SendJsonMessage) => void;
   setRpm: (value: number | undefined) => void;
-  setTempo: (value: string | undefined) => void;
+  setTempo: (value: number | undefined) => void;
   sendMessage: SendJsonMessage;
   rpm: number | undefined;
-  tempo: string | undefined;
+  tempo: number | undefined;
 };
 
 export const useSystem = create<SystemState>((set) => ({
@@ -57,5 +57,5 @@ export const useSystem = create<SystemState>((set) => ({
   },
   sendMessage: () => {},
   rpm: 40,
-  tempo: "3",
+  tempo: 3,
 }));

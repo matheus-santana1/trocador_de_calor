@@ -13,7 +13,7 @@ export default function Select(props: SelectProps) {
   const { setTempo } = useSystem();
 
   const handleChange = (event: SelectChangeEvent) => {
-    setTempo(event.target.value as string);
+    setTempo(event.target.value as unknown as number);
   };
 
   return (

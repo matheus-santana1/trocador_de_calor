@@ -57,7 +57,12 @@ export default function StatusBar() {
 
   return (
     <>
-      <AppBar position="fixed" color={state.color} sx={{ top: "auto", bottom: 0, transform: "translateY(31px)" }} className="statusbar">
+      <AppBar
+        position="absolute"
+        color={state.color}
+        sx={{ top: "auto", bottom: 0, transform: "translateY(31px)" }}
+        className="statusbar"
+      >
         <Toolbar style={{ justifyContent: "space-between" }}>
           <Typography variant="caption" component="div">
             {state.text}

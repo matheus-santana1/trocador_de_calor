@@ -16,6 +16,7 @@
     "@mui/icons-material": "^5.15.15",
     "@mui/material": "^5.15.15",
     "apexcharts": "^3.49.0",
+    "downsample": "^1.4.0",
     "gsap": "^3.12.5",
     "react": "^18.3.1",
     "react-apexcharts": "^1.4.1",
@@ -23,9 +24,11 @@
     "react-hook-form": "^7.51.3",
     "react-live-clock": "^6.1.20",
     "react-use-websocket": "^4.8.1",
+    "vite-plugin-singlefile": "^2.0.2",
     "zustand": "^4.5.2"
   },
   "devDependencies": {
+    "@types/lodash": "^4.17.7",
     "@types/react": "^18.2.66",
     "@types/react-dom": "^18.2.22",
     "@typescript-eslint/eslint-plugin": "^7.2.0",

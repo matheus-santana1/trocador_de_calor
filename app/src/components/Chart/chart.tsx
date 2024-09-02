@@ -6,28 +6,13 @@ type ChartProps = {
   disable: boolean;
 };
 
+export interface SeriesPayload {
+  name: string;
+  data: number[];
+}
+
 export default function Chart(props: ChartProps) {
-  const series = [
-    {
-      name: "Temperatura de Entrada",
-      data: [3, 7, 12, 18, 25, 32, 40, 50, 65, 80, 85, 90, 100, 120],
-    },
-    {
-      name: "Temperatura de Saída",
-      data: [3, 7, 12, 18, 25, 32, 40, 50, 65, 80, 85, 90, 100, 120],
-    },
-  ];
   const options: ApexOptions = {
-    series: [
-      {
-        name: "Temperatura de Entrada",
-        data: [],
-      },
-      {
-        name: "Temperatura de Saída",
-        data: [],
-      },
-    ],
     chart: {
       id: "chart",
       type: "line",
@@ -108,6 +93,17 @@ export default function Chart(props: ChartProps) {
       },
     },
   };
+
+  let series: SeriesPayload[] = [
+    {
+      name: "Temperatura de Entrada",
+      data: [3, 7, 12, 18, 25, 32, 40, 50, 65, 80, 85, 90, 100, 120],
+    },
+    {
+      name: "Temperatura de Saída",
+      data: [3, 7, 12, 18, 25, 32, 40, 50, 65, 80, 85, 90, 100, 120],
+    },
+  ];
 
   return (
     <>

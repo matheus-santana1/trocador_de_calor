@@ -1,13 +1,13 @@
 import { create } from "zustand";
+import { SeriesPayload } from "../components/Chart/chart";
 
-export type StatusActions = "connecting" | "connect" | "disconnect" | "mensuaring";
+export type StatusActions = "connecting" | "connected" | "disconnect" | "mensuaring";
 
 export interface MessagePayload {
   status?: string;
   S1?: number;
   S2?: number;
-  tempo?: number;
-  rpm?: number;
+  percent?: number;
 }
 
 type SendJsonMessage = (jsonMessage: MessagePayload, keep?: boolean) => void;
@@ -20,9 +20,11 @@ export type SystemState = {
   setSendMessage: (value: SendJsonMessage) => void;
   setRpm: (value: number | undefined) => void;
   setTempo: (value: number | undefined) => void;
+  setSeries: (values: SeriesPayload[] | undefined) => void;
   sendMessage: SendJsonMessage;
   rpm: number | undefined;
   tempo: number | undefined;
+  series: SeriesPayload[] | undefined;
 };
 
 export const useSystem = create<SystemState>((set) => ({
@@ -34,10 +36,10 @@ export const useSystem = create<SystemState>((set) => ({
       set({
         status: value.status,
         url: value.status == "disconnect" ? null : value.url,
-        connected: value.status == "connect" || value.status == "mensuaring",
+        connected: value.status == "connected" || value.status == "mensuaring",
       });
     } else {
-      set({ status: value.status, connected: value.status == "connect" || value.status == "mensuaring" });
+      set({ status: value.status, connected: value.status == "connected" || value.status == "mensuaring" });
     }
   },
   setSendMessage: (value) => {
@@ -55,7 +57,22 @@ export const useSystem = create<SystemState>((set) => ({
       tempo: value,
     });
   },
+  setSeries: (value) => {
+    set({
+      series: value,
+    });
+  },
   sendMessage: () => {},
   rpm: 40,
   tempo: 3,
+  series: [
+    {
+      name: "Temperatura de Entrada",
+      data: [3, 7, 12, 18, 25, 32, 40, 50, 65, 80, 85, 90, 100, 120],
+    },
+    {
+      name: "Temperatura de Saída",
+      data: [3, 7, 12, 18, 25, 32, 40, 50, 65, 80, 85, 90, 100, 120],
+    },
+  ],
 }));

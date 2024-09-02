@@ -12,6 +12,7 @@ import gsap from "gsap";
 type InfoProps = {
   disable: boolean;
   valueSlider: number;
+  percent: number;
 };
 
 function LinearProgressWithLabel(props: LinearProgressProps & { value: number }) {
@@ -22,7 +23,7 @@ function LinearProgressWithLabel(props: LinearProgressProps & { value: number })
     });
   });
   return (
-    <Box sx={{ display: "flex", alignItems: "center" }}>
+    <Box sx={{ display: "flex", alignItems: "center", marginBottom: "10px" }}>
       <Box sx={{ width: "100%", mr: 1 }}>
         <LinearProgress variant="determinate" {...props} />
       </Box>
@@ -52,7 +53,7 @@ export default function Info(props: InfoProps) {
     });
   }
 
-  const shouldRenderProgress = status === "connect" || status === "mensuaring";
+  const shouldRenderProgress = status === "connected" || status === "mensuaring";
 
   return (
     <>
@@ -66,7 +67,7 @@ export default function Info(props: InfoProps) {
           </Button>
         </Stack>
       </Box>
-      {shouldRenderProgress && <LinearProgressWithLabel value={12} className="linearProgress" style={{ opacity: 0 }} />}
+      {shouldRenderProgress && <LinearProgressWithLabel value={props.percent} className="linearProgress" style={{ opacity: 0 }} />}
     </>
   );
 }
